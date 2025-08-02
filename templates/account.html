@@ -1,0 +1,45 @@
+{% include "header.html" %}
+
+
+<!-- Page Header-->
+<header class="masthead" style="background-image: url('../static/assets/img/about-bg.jpg')">
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="page-heading">
+          <h1>My Profile</h1>
+          <span class="subheading">Your personal information and details.</span>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Main Content-->
+<main class="mb-4">
+  <div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        
+        <section id="about" style="max-width: 900px; margin: auto; padding: 40px 20px; font-family: 'Segoe UI', sans-serif; line-height: 1.7;"> 
+            <p><strong style="font-size:27px">Username: </strong> {{ current_user.username }}</p>
+            <p><strong style="font-size:27px">Email: </strong> {{ current_user.email }}</p>
+            <p><strong style="font-size:27px">Password: </strong>{{current_user.password[0]}}{{ '*' * (current_user.password|length - 3) }}{{current_user.password[-2:]}}</p>
+            <p><strong style="font-size:27px">Registration Date: </strong>{{current_user.created_on}}</p>
+            
+            {% set x = namespace(count=0) %}
+            {% for i in all_post %}
+            {% if i.users_email == current_user.email %}
+            {% set x.count = x.count + 1 %}
+            {% endif %}
+            {% endfor %}
+            
+            <p><strong style="font-size:27px">Total Blogs Posted: </strong>{{x.count}}</p>
+            
+          </section>
+          <a href="{{ url_for('logout') }}" class="btn btn-primary float-right">Logout</a>
+
+  </div>
+</main>
+
+{% include "footer.html" %}
